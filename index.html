@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ใบสมัครงาน | Job Application - Moto24</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sarabun',sans-serif;background:#f0f2f5;color:#333;font-size:15px}
+.header{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#1565c0 100%);color:#fff;padding:16px 20px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.header-logo{width:72px;height:72px;border-radius:8px;object-fit:contain;background:#fff;padding:4px}
+.header-text h1{font-size:22px;font-weight:700;margin-bottom:4px}
+.header-text p{font-size:13px;opacity:.9}
+.steps{display:flex;background:#fff;border-bottom:1px solid #e0e0e0;overflow-x:auto}
+.step{flex:1;min-width:80px;padding:12px 8px;text-align:center;cursor:pointer;border-bottom:3px solid transparent;transition:.2s;font-size:13px;color:#999}
+.step.active{color:#1565c0;border-bottom-color:#1565c0;font-weight:700}
+.step.done{color:#4caf50}
+.step-num{display:block;font-size:18px;font-weight:700;margin-bottom:2px}
+.container{max-width:760px;margin:20px auto;padding:0 12px}
+.card{background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.section-title{font-size:17px;font-weight:700;color:#1565c0;margin-bottom:16px;display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:2px solid #e8eaf6}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+.form-group{margin-bottom:12px}
+label{display:block;font-size:13px;color:#555;margin-bottom:4px;font-weight:600}
+input[type=text],input[type=email],input[type=tel],input[type=number],input[type=date],select,textarea{width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;transition:.2s;background:#fafafa}
+input:focus,select:focus,textarea:focus{border-color:#1565c0;background:#fff;outline:none}
+input.error,select.error,textarea.error{border-color:#e53935}
+textarea{min-height:80px;resize:vertical}
+.radio-row{display:flex;flex-direction:row;flex-wrap:wrap;gap:8px 20px;padding:6px 0}
+.check-row{display:flex;flex-direction:row;flex-wrap:wrap;gap:8px 20px;padding:6px 0}
+.radio-row label,.check-row label{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:400;color:#333;width:auto}
+.radio-row input[type=radio],.check-row input[type=checkbox]{width:16px;height:16px;cursor:pointer;flex-shrink:0}
+.req{color:#e53935}
+.hint{font-size:12px;color:#888;margin-top:3px}
+.nav-btns{display:flex;justify-content:space-between;margin-top:20px;gap:12px}
+.btn{padding:12px 28px;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;transition:.2s;font-family:inherit}
+.btn-prev{background:#f5f5f5;color:#555}
+.btn-prev:hover{background:#e0e0e0}
+.btn-next{background:#1565c0;color:#fff}
+.btn-next:hover{background:#0d47a1}
+.btn-submit{background:#2e7d32;color:#fff}
+.btn-submit:hover{background:#1b5e20}
+.photo-section{display:flex;align-items:center;gap:16px;margin-bottom:12px}
+.photo-preview{width:100px;height:130px;border:2px dashed #ccc;border-radius:8px;object-fit:cover;cursor:pointer;display:flex;align-items:center;justify-content:center;background:#fafafa;color:#aaa;font-size:12px;text-align:center}
+.photo-preview img{width:100%;height:100%;object-fit:cover;border-radius:6px}
+.work-section{border:1px solid #e8eaf6;border-radius:8px;padding:16px;margin-bottom:12px;background:#fafafa}
+.work-section h3{font-size:14px;font-weight:700;color:#1565c0;margin-bottom:12px}
+.success-card{text-align:center;padding:40px 20px}
+.success-icon{font-size:64px;margin-bottom:16px}
+.success-card h2{color:#2e7d32;margin-bottom:8px}
+.loading-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center;flex-direction:column;color:#fff}
+.loading-overlay.show{display:flex}
+.spinner{width:48px;height:48px;border:4px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div id="loadingMsg">กำลังส่งข้อมูล...</div>
+</div>
+
+<div class="header">
+  <img class="header-logo" src="https://lh3.googleusercontent.com/d/17wkwih6zxRNRGy-Q672QDhVPNpX7dNmX" alt="Moto24" onerror="this.style.display='none'">
+  <div class="header-text">
+    <h1>ใบสมัครงาน | Job Application</h1>
+    <p>บริษัท โมโต24 จำกัด · Moto24 Co., Ltd.</p>
+    <p>กรุณากรอกข้อมูลให้ครบถ้วน</p>
+  </div>
+</div>
+
+<div class="steps" id="stepsBar">
+  <div class="step active" id="tab1" onclick="goToStep(1)"><span class="step-num">1</span>ประวัติส่วนตัว</div>
+  <div class="step" id="tab2" onclick="goToStep(2)"><span class="step-num">2</span>ครอบครัว/ฉุกเฉิน</div>
+  <div class="step" id="tab3" onclick="goToStep(3)"><span class="step-num">3</span>การศึกษา/งาน</div>
+  <div class="step" id="tab4" onclick="goToStep(4)"><span class="step-num">4</span>ความสามารถ</div>
+</div>
+
+<div class="container">
+<div id="step1">
+<div class="card">
+  <div class="section-title">📋 ประวัติส่วนตัว Personal Data</div>
+  <div class="form-group">
+    <label>สมัครงานสำหรับ (Employment Type) <span class="req">*</span></label>
+    <div class="radio-row">
+      <label><input type="radio" name="employment_type" value="พนักงานรายเดือน (Monthly)"> พนักงานรายเดือน (Monthly)</label>
+      <label><input type="radio" name="employment_type" value="พนักงานตามผลงาน (By Result)"> พนักงานตามผลงาน (By Result)</label>
+      <label><input type="radio" name="employment_type" value="พนักงานสัญญาจ้าง (Contract)"> พนักงานสัญญาจ้าง (Contract)</label>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>ตำแหน่งที่สมัคร (Position) <span class="req">*</span></label><input type="text" id="position" placeholder="เช่น นักบัญชี, พนักงานขาย"></div>
+    <div class="form-group"><label>เงินเดือนที่ต้องการ (Salary Expected)</label><input type="text" id="salary_expected" placeholder="เช่น 25,000 บาท"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>วันที่สมัคร (Application Date) <span class="req">*</span></label><input type="date" id="apply_date"></div>
+    <div class="form-group"><label>คำนำหน้า (Title) <span class="req">*</span></label><select id="title"><option value="">-- เลือก --</option><option>นาย (Mr.)</option><option>นาง (Mrs.)</option><option>นางสาว (Miss)</option></select></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>ชื่อ-สกุล (ภาษาไทย) <span class="req">*</span></label><input type="text" id="name_th" placeholder="ชื่อ นามสกุล"></div>
+    <div class="form-group"><label>ชื่อเล่น (Nickname)</label><input type="text" id="nickname" placeholder="ชื่อเล่น"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>Full Name in English <span class="req">*</span></label><input type="text" id="name_en" placeholder="First Last"></div>
+    <div class="form-group"><label>วันเกิด (Date of Birth) <span class="req">*</span></label><input type="date" id="dob"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>อายุ (Age) <span class="req">*</span></label><input type="number" id="age" placeholder="อายุ (ปี)"></div>
+    <div class="form-group"><label>เพศ (Gender) <span class="req">*</span></label>
+      <div class="radio-row">
+        <label><input type="radio" name="gender" value="ชาย (Male)"> ชาย (Male)</label>
+        <label><input type="radio" name="gender" value="หญิง (Female)"> หญิง (Female)</label>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>สัญชาติ (Nationality) <span class="req">*</span></label><input type="text" id="nationality" placeholder="เช่น ไทย"></div>
+    <div class="form-group"><label>เชื้อชาติ (Race)</label><input type="text" id="race" placeholder="เช่น ไทย"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>ศาสนา (Religion)</label><input type="text" id="religion" placeholder="เช่น พุทธ"></div>
+    <div class="form-group"><label>สถานภาพ (Marital Status) <span class="req">*</span></label>
+      <div class="radio-row">
+        <label><input type="radio" name="marital" value="โสด (Single)"> โสด (Single)</label>
+        <label><input type="radio" name="marital" value="แต่งงาน (Married)"> แต่งงาน (Married)</label>
+        <label><input type="radio" name="marital" value="หย่าร้าง (Divorced)"> หย่าร้าง (Divorced)</label>
+        <label><input type="radio" name="marital" value="หม้าย (Widowed)"> หม้าย (Widowed)</label>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>เลขบัตรประชาชน (ID Card No.) <span class="req">*</span></label><input type="text" id="id_card" placeholder="X-XXXX-XXXXX-XX-X" maxlength="17"></div>
+    <div class="form-group"><label>วันหมดอายุบัตร (ID Expire Date) <span class="req">*</span></label><input type="date" id="id_expire"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>ที่อยู่ปัจจุบัน (Current Address) <span class="req">*</span></label><input type="text" id="address_current" placeholder="บ้านเลขที่ ซอย ถนน"></div>
+    <div class="form-group"><label>ที่อยู่ตามทะเบียนบ้าน (Registered Address)</label><input type="text" id="address_registered" placeholder="บ้านเลขที่ ซอย ถนน"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>เบอร์โทรศัพท์ (Phone) <span class="req">*</span></label><input type="tel" id="phone" placeholder="08X-XXX-XXXX"></div>
+    <div class="form-group"><label>Line ID</label><input type="text" id="line_id" placeholder="Line ID"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>Email <span class="req">*</span></label><input type="email" id="email" placeholder="email@example.com"></div>
+    <div class="form-group"><label>Facebook</label><input type="text" id="facebook" placeholder="Facebook"></div>
+  </div>
+  <div class="form-group">
+    <label>รูปถ่าย (Photo)</label>
+    <div class="photo-section">
+      <div class="photo-preview" id="photoBox" onclick="document.getElementById('photoInput').click()">
+        <div id="photoPlaceholder">📷<br>คลิกเพื่ออัปโหลด</div>
+        <img id="photoImg" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:6px">
+      </div>
+      <div><p style="font-size:13px;color:#666">อัปโหลดรูปถ่ายหน้าตรง<br>ขนาดไม่เกิน 2 MB</p>
+      <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="previewPhoto(this)"></div>
+    </div>
+  </div>
+</div>
+<div class="nav-btns"><div></div><button class="btn btn-next" onclick="nextStep(1)">ถัดไป →</button></div>
+</div>
+<div id="step2" class="hidden">
+<div class="card">
+  <div class="section-title">👨‍👩‍👧 ข้อมูลครอบครัว Family Information</div>
+  <div class="form-row">
+    <div class="form-group"><label>ชื่อบิดา (Father's Name) <span class="req">*</span></label><input type="text" id="father_name" placeholder="ชื่อ นามสกุล"></div>
+    <div class="form-group"><label>อาชีพบิดา (Father's Occupation) <span class="req">*</span></label><input type="text" id="father_job" placeholder="อาชีพ"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>ชื่อมารดา (Mother's Name) <span class="req">*</span></label><input type="text" id="mother_name" placeholder="ชื่อ นามสกุล"></div>
+    <div class="form-group"><label>อาชีพมารดา (Mother's Occupation) <span class="req">*</span></label><input type="text" id="mother_job" placeholder="อาชีพ"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>จำนวนพี่น้อง (Siblings) <span class="req">*</span></label><input type="number" id="siblings_total" placeholder="จำนวนทั้งหมด" min="0"></div>
+    <div class="form-group"><label>ลำดับที่ของตนเอง (Birth Order) <span class="req">*</span></label><input type="number" id="siblings_order" placeholder="ลำดับที่..." min="1"></div>
+  </div>
+  <div class="form-group"><label>ชื่อคู่สมรส (Spouse's Name)</label><input type="text" id="spouse_name" placeholder="ชื่อ นามสกุล (ถ้ามี)"></div>
+  <div class="form-row">
+    <div class="form-group"><label>อาชีพคู่สมรส (Spouse's Occupation)</label><input type="text" id="spouse_job" placeholder="อาชีพ"></div>
+    <div class="form-group"><label>จำนวนบุตร (Children)</label><input type="number" id="children_count" placeholder="จำนวนบุตร" min="0"></div>
+  </div>
+</div>
+<div class="card">
+  <div class="section-title">🚨 ผู้ติดต่อฉุกเฉิน Emergency Contact</div>
+  <div class="form-row">
+    <div class="form-group"><label>ชื่อผู้ติดต่อ (Contact Name) <span class="req">*</span></label><input type="text" id="emergency_name" placeholder="ชื่อ นามสกุล"></div>
+    <div class="form-group"><label>ความสัมพันธ์ (Relationship) <span class="req">*</span></label><input type="text" id="emergency_relation" placeholder="เช่น มารดา, คู่สมรส"></div>
+  </div>
+  <div class="form-group"><label>เบอร์โทรฉุกเฉิน (Emergency Phone) <span class="req">*</span></label><input type="tel" id="emergency_phone" placeholder="08X-XXX-XXXX"></div>
+</div>
+<div class="nav-btns">
+  <button class="btn btn-prev" onclick="prevStep(2)">← ย้อนกลับ</button>
+  <button class="btn btn-next" onclick="nextStep(2)">ถัดไป →</button>
+</div>
+</div>
+<div id="step3" class="hidden">
+<div class="card">
+  <div class="section-title">🎓 ประวัติการศึกษา Education</div>
+  <div class="form-row">
+    <div class="form-group"><label>ระดับการศึกษาสูงสุด (Highest Education) <span class="req">*</span></label>
+      <select id="edu_level"><option value="">-- เลือก --</option><option>ประถมศึกษา (Primary)</option><option>มัธยมศึกษาตอนต้น (Junior High)</option><option>มัธยมศึกษาตอนปลาย / ปวช. (High School)</option><option>อนุปริญญา / ปวส. (Diploma)</option><option>ปริญญาตรี (Bachelor's)</option><option>ปริญญาโท (Master's)</option><option>ปริญญาเอก (Doctoral)</option></select>
+    </div>
+    <div class="form-group"><label>สถาบันการศึกษา (Institution) <span class="req">*</span></label><input type="text" id="edu_school" placeholder="ชื่อสถาบัน"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>สาขาวิชา (Major) <span class="req">*</span></label><input type="text" id="edu_major" placeholder="สาขาวิชา"></div>
+    <div class="form-group"><label>ปีที่จบ (Graduation Year) <span class="req">*</span></label><input type="text" id="edu_year" placeholder="เช่น 2563"></div>
+  </div>
+  <div class="form-group"><label>เกรดเฉลี่ย (GPA)</label><input type="text" id="edu_gpa" placeholder="เช่น 3.25" style="max-width:200px"></div>
+</div>
+<div class="card">
+  <div class="section-title">💼 ประวัติการทำงาน Work History</div>
+  <div class="work-section">
+    <h3>การทำงานที่ 1 (Work History #1)</h3>
+    <div class="form-row">
+      <div class="form-group"><label>ชื่อบริษัท <span class="req">*</span></label><input type="text" id="work_1_company" placeholder="ชื่อบริษัท"></div>
+      <div class="form-group"><label>ตำแหน่ง <span class="req">*</span></label><input type="text" id="work_1_position" placeholder="ตำแหน่งงาน"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>วันเริ่ม <span class="req">*</span></label><input type="text" id="work_1_start" placeholder="เช่น ม.ค. 2563"></div>
+      <div class="form-group"><label>วันสิ้นสุด <span class="req">*</span></label><input type="text" id="work_1_end" placeholder="เช่น ธ.ค. 2564"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>เงินเดือนสุดท้าย <span class="req">*</span></label><input type="text" id="work_1_salary" placeholder="เช่น 20,000 บาท"></div>
+      <div class="form-group"><label>สาเหตุที่ลาออก <span class="req">*</span></label><input type="text" id="work_1_reason" placeholder="สาเหตุที่ลาออก"></div>
+    </div>
+  </div>
+  <div class="work-section">
+    <h3>การทำงานที่ 2 (Work History #2)</h3>
+    <div class="form-row">
+      <div class="form-group"><label>ชื่อบริษัท <span class="req">*</span></label><input type="text" id="work_2_company" placeholder="ชื่อบริษัท"></div>
+      <div class="form-group"><label>ตำแหน่ง <span class="req">*</span></label><input type="text" id="work_2_position" placeholder="ตำแหน่งงาน"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>วันเริ่ม <span class="req">*</span></label><input type="text" id="work_2_start" placeholder="เช่น ม.ค. 2563"></div>
+      <div class="form-group"><label>วันสิ้นสุด <span class="req">*</span></label><input type="text" id="work_2_end" placeholder="เช่น ธ.ค. 2564"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>เงินเดือนสุดท้าย <span class="req">*</span></label><input type="text" id="work_2_salary" placeholder="เช่น 20,000 บาท"></div>
+      <div class="form-group"><label>สาเหตุที่ลาออก <span class="req">*</span></label><input type="text" id="work_2_reason" placeholder="สาเหตุที่ลาออก"></div>
+    </div>
+  </div>
+  <div class="work-section">
+    <h3>การทำงานที่ 3 (Work History #3) — ไม่บังคับ</h3>
+    <div class="form-row">
+      <div class="form-group"><label>ชื่อบริษัท</label><input type="text" id="work_3_company" placeholder="ชื่อบริษัท"></div>
+      <div class="form-group"><label>ตำแหน่ง</label><input type="text" id="work_3_position" placeholder="ตำแหน่งงาน"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>วันเริ่ม</label><input type="text" id="work_3_start" placeholder="เช่น ม.ค. 2563"></div>
+      <div class="form-group"><label>วันสิ้นสุด</label><input type="text" id="work_3_end" placeholder="เช่น ธ.ค. 2564"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>เงินเดือนสุดท้าย</label><input type="text" id="work_3_salary" placeholder="เช่น 20,000 บาท"></div>
+      <div class="form-group"><label>สาเหตุที่ลาออก</label><input type="text" id="work_3_reason" placeholder="สาเหตุที่ลาออก"></div>
+    </div>
+  </div>
+</div>
+<div class="nav-btns">
+  <button class="btn btn-prev" onclick="prevStep(3)">← ย้อนกลับ</button>
+  <button class="btn btn-next" onclick="nextStep(3)">ถัดไป →</button>
+</div>
+</div>
+<div id="step4" class="hidden">
+<div class="card">
+  <div class="section-title">🚗 ใบขับขี่ Driving License</div>
+  <div class="form-group"><label>มีใบขับขี่หรือไม่ <span class="req">*</span></label>
+    <div class="radio-row">
+      <label><input type="radio" name="has_license" value="มี (Yes)"> มี (Yes)</label>
+      <label><input type="radio" name="has_license" value="ไม่มี (No)"> ไม่มี (No)</label>
+    </div>
+  </div>
+  <div class="form-group"><label>ประเภทใบขับขี่ (License Type)</label>
+    <div class="check-row">
+      <label><input type="checkbox" name="license_type" value="รถยนต์ (Car)"> รถยนต์ (Car)</label>
+      <label><input type="checkbox" name="license_type" value="รถจักรยานยนต์ (Motorcycle)"> รถจักรยานยนต์ (Motorcycle)</label>
+      <label><input type="checkbox" name="license_type" value="รถบรรทุก (Truck)"> รถบรรทุก (Truck)</label>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="section-title">💻 ทักษะคอมพิวเตอร์ Computer Skills</div>
+  <div class="form-group"><label>โปรแกรมที่ใช้ได้ <span class="req">*</span></label>
+    <div class="check-row">
+      <label><input type="checkbox" name="computer_skills" value="Microsoft Word"> Microsoft Word</label>
+      <label><input type="checkbox" name="computer_skills" value="Microsoft Excel"> Microsoft Excel</label>
+      <label><input type="checkbox" name="computer_skills" value="Microsoft PowerPoint"> Microsoft PowerPoint</label>
+      <label><input type="checkbox" name="computer_skills" value="Internet/Email"> Internet/Email</label>
+      <label><input type="checkbox" name="computer_skills" value="อื่นๆ"> อื่นๆ</label>
+    </div>
+  </div>
+  <div class="form-group"><label>ระดับความสามารถ <span class="req">*</span></label>
+    <div class="radio-row">
+      <label><input type="radio" name="computer_level" value="ดีมาก (Excellent)"> ดีมาก (Excellent)</label>
+      <label><input type="radio" name="computer_level" value="ดี (Good)"> ดี (Good)</label>
+      <label><input type="radio" name="computer_level" value="พอใช้ (Fair)"> พอใช้ (Fair)</label>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="section-title">🌏 ทักษะภาษา Language Skills</div>
+  <div class="form-group"><label>ภาษาอังกฤษ - การอ่าน <span class="req">*</span></label>
+    <div class="radio-row">
+      <label><input type="radio" name="eng_read" value="ดีมาก"> ดีมาก</label>
+      <label><input type="radio" name="eng_read" value="ดี"> ดี</label>
+      <label><input type="radio" name="eng_read" value="พอใช้"> พอใช้</label>
+      <label><input type="radio" name="eng_read" value="ไม่ได้"> ไม่ได้</label>
+    </div>
+  </div>
+  <div class="form-group"><label>ภาษาอังกฤษ - การเขียน <span class="req">*</span></label>
+    <div class="radio-row">
+      <label><input type="radio" name="eng_write" value="ดีมาก"> ดีมาก</label>
+      <label><input type="radio" name="eng_write" value="ดี"> ดี</label>
+      <label><input type="radio" name="eng_write" value="พอใช้"> พอใช้</label>
+      <label><input type="radio" name="eng_write" value="ไม่ได้"> ไม่ได้</label>
+    </div>
+  </div>
+  <div class="form-group"><label>ภาษาอังกฤษ - การพูด <span class="req">*</span></label>
+    <div class="radio-row">
+      <label><input type="radio" name="eng_speak" value="ดีมาก"> ดีมาก</label>
+      <label><input type="radio" name="eng_speak" value="ดี"> ดี</label>
+      <label><input type="radio" name="eng_speak" value="พอใช้"> พอใช้</label>
+      <label><input type="radio" name="eng_speak" value="ไม่ได้"> ไม่ได้</label>
+    </div>
+  </div>
+  <div class="form-group"><label>ภาษาอื่น</label><input type="text" id="other_lang" placeholder="ระบุภาษาและระดับ"></div>
+</div>
+<div class="card">
+  <div class="section-title">📝 ข้อมูลเพิ่มเติม Additional Information</div>
+  <div class="form-group"><label>มีพาหนะเป็นของตนเอง <span class="req">*</span></label>
+    <div class="radio-row">
+      <label><input type="radio" name="own_vehicle" value="มี (Yes)"> มี (Yes)</label>
+      <label><input type="radio" name="own_vehicle" value="ไม่มี (No)"> ไม่มี (No)</label>
+    </div>
+  </div>
+  <div class="form-group"><label>สามารถทำงานล่วงเวลาได้ <span class="req">*</span></label>
+    <div class="radio-row">
+      <label><input type="radio" name="can_ot" value="ได้ (Yes)"> ได้ (Yes)</label>
+      <label><input type="radio" name="can_ot" value="ไม่ได้ (No)"> ไม่ได้ (No)</label>
+    </div>
+  </div>
+  <div class="form-group"><label>สามารถเดินทางต่างจังหวัดได้ <span class="req">*</span></label>
+    <div class="radio-row">
+      <label><input type="radio" name="can_travel" value="ได้ (Yes)"> ได้ (Yes)</label>
+      <label><input type="radio" name="can_travel" value="ไม่ได้ (No)"> ไม่ได้ (No)</label>
+    </div>
+  </div>
+  <div class="form-group"><label>สามารถเริ่มงานได้เมื่อไร <span class="req">*</span></label><input type="text" id="start_date" placeholder="เช่น ทันที หรือ 1 เดือน"></div>
+  <div class="form-group"><label>ทักษะพิเศษ</label><textarea id="special_skills" placeholder="ระบุทักษะพิเศษ"></textarea></div>
+  <div class="form-group"><label>บุคคลอ้างอิง</label><textarea id="references" placeholder="ชื่อ-สกุล ตำแหน่ง บริษัท เบอร์โทร"></textarea></div>
+</div>
+<div class="nav-btns">
+  <button class="btn btn-prev" onclick="prevStep(4)">← ย้อนกลับ</button>
+  <button class="btn btn-submit" onclick="submitForm()">✅ ส่งใบสมัคร</button>
+</div>
+</div>
+
+<div id="stepSuccess" class="hidden">
+<div class="card success-card">
+  <div class="success-icon">✅</div>
+  <h2>ส่งใบสมัครเรียบร้อยแล้ว!</h2>
+  <p style="color:#666;margin-top:8px">ขอบคุณที่สมัครงานกับบริษัท โมโต24 จำกัด</p>
+  <p style="color:#888;margin-top:16px;font-size:13px" id="refCode"></p>
+</div>
+</div>
+</div>
+<script>
+var currentStep=1,photoData=null;
+window.onload=function(){
+  var t=new Date(),y=t.getFullYear(),m=String(t.getMonth()+1).padStart(2,'0'),d=String(t.getDate()).padStart(2,'0');
+  var el=document.getElementById('apply_date');
+  if(el&&!el.value)el.value=y+'-'+m+'-'+d;
+};
+function goToStep(n){if(n>currentStep&&!validateStep(currentStep))return;showStep(n);}
+function showStep(n){
+  for(var i=1;i<=4;i++){
+    var el=document.getElementById('step'+i);if(el)el.classList.add('hidden');
+    var tab=document.getElementById('tab'+i);if(tab){tab.classList.remove('active','done');if(i<n)tab.classList.add('done');}
+  }
+  var el2=document.getElementById('step'+n);if(el2)el2.classList.remove('hidden');
+  var tab2=document.getElementById('tab'+n);if(tab2)tab2.classList.add('active');
+  currentStep=n;window.scrollTo(0,0);
+}
+function nextStep(n){if(validateStep(n))showStep(n+1);}
+function prevStep(n){showStep(n-1);}
+function previewPhoto(input){
+  if(input.files&&input.files[0]){
+    var r=new FileReader();
+    r.onload=function(e){
+      photoData=e.target.result;
+      var img=document.getElementById('photoImg'),ph=document.getElementById('photoPlaceholder');
+      img.src=photoData;img.style.display='block';ph.style.display='none';
+    };r.readAsDataURL(input.files[0]);
+  }
+}
+function gv(id){var el=document.getElementById(id);return el?el.value.trim():'';}
+function gr(name){var el=document.querySelector('input[name="'+name+'"]:checked');return el?el.value:'';}
+function gc(name){return Array.from(document.querySelectorAll('input[name="'+name+'"]:checked')).map(function(e){return e.value;}).join(', ');}
+function se(id,err){var el=document.getElementById(id);if(el){if(err)el.classList.add('error');else el.classList.remove('error');}}
+function validateStep(n){
+  var valid=true,firstErr=null;
+  function chk(id,val){var empty=!val||!val.trim();se(id,empty);if(empty){valid=false;if(!firstErr)firstErr=id;}}
+  function chkR(name){if(!gr(name)){valid=false;if(!firstErr)firstErr=name;}}
+  if(n===1){
+    chkR('employment_type');chk('position',gv('position'));chk('apply_date',gv('apply_date'));
+    chk('title',gv('title'));chk('name_th',gv('name_th'));chk('name_en',gv('name_en'));
+    chk('dob',gv('dob'));chk('age',gv('age'));chkR('gender');chkR('marital');
+    chk('nationality',gv('nationality'));chk('id_card',gv('id_card'));chk('id_expire',gv('id_expire'));
+    chk('address_current',gv('address_current'));chk('phone',gv('phone'));chk('email',gv('email'));
+  }else if(n===2){
+    chk('father_name',gv('father_name'));chk('father_job',gv('father_job'));
+    chk('mother_name',gv('mother_name'));chk('mother_job',gv('mother_job'));
+    chk('siblings_total',gv('siblings_total'));chk('siblings_order',gv('siblings_order'));
+    chk('emergency_name',gv('emergency_name'));chk('emergency_relation',gv('emergency_relation'));
+    chk('emergency_phone',gv('emergency_phone'));
+  }else if(n===3){
+    chk('edu_level',gv('edu_level'));chk('edu_school',gv('edu_school'));
+    chk('edu_major',gv('edu_major'));chk('edu_year',gv('edu_year'));
+    chk('work_1_company',gv('work_1_company'));chk('work_1_position',gv('work_1_position'));
+    chk('work_1_start',gv('work_1_start'));chk('work_1_end',gv('work_1_end'));
+    chk('work_1_salary',gv('work_1_salary'));chk('work_1_reason',gv('work_1_reason'));
+    chk('work_2_company',gv('work_2_company'));chk('work_2_position',gv('work_2_position'));
+    chk('work_2_start',gv('work_2_start'));chk('work_2_end',gv('work_2_end'));
+    chk('work_2_salary',gv('work_2_salary'));chk('work_2_reason',gv('work_2_reason'));
+  }else if(n===4){
+    chkR('has_license');chkR('computer_level');chkR('eng_read');chkR('eng_write');chkR('eng_speak');
+    chkR('own_vehicle');chkR('can_ot');chkR('can_travel');chk('start_date',gv('start_date'));
+    if(!gc('computer_skills'))valid=false;
+  }
+  if(!valid){alert('กรุณากรอกข้อมูลให้ครบถ้วน\nPlease fill in all required fields.');
+    if(firstErr){var e=document.getElementById(firstErr)||document.querySelector('input[name="'+firstErr+'"]');if(e)e.scrollIntoView({behavior:'smooth',block:'center'});}}
+  return valid;
+}
+function showLoading(msg){document.getElementById('loadingMsg').textContent=msg||'กำลังส่งข้อมูล...';document.getElementById('loadingOverlay').classList.add('show');}
+function hideLoading(){document.getElementById('loadingOverlay').classList.remove('show');}
+function submitForm(){
+  if(!validateStep(4))return;
+  var fields={
+    employment_type:gr('employment_type'),position:gv('position'),salary_expected:gv('salary_expected'),
+    apply_date:gv('apply_date'),title:gv('title'),name_th:gv('name_th'),nickname:gv('nickname'),
+    name_en:gv('name_en'),dob:gv('dob'),age:gv('age'),gender:gr('gender'),
+    nationality:gv('nationality'),race:gv('race'),religion:gv('religion'),marital:gr('marital'),
+    id_card:gv('id_card'),id_expire:gv('id_expire'),address_current:gv('address_current'),
+    address_registered:gv('address_registered'),phone:gv('phone'),line_id:gv('line_id'),
+    email:gv('email'),facebook:gv('facebook'),father_name:gv('father_name'),father_job:gv('father_job'),
+    mother_name:gv('mother_name'),mother_job:gv('mother_job'),siblings_total:gv('siblings_total'),
+    siblings_order:gv('siblings_order'),spouse_name:gv('spouse_name'),spouse_job:gv('spouse_job'),
+    children_count:gv('children_count'),emergency_name:gv('emergency_name'),
+    emergency_relation:gv('emergency_relation'),emergency_phone:gv('emergency_phone'),
+    edu_level:gv('edu_level'),edu_school:gv('edu_school'),edu_major:gv('edu_major'),
+    edu_year:gv('edu_year'),edu_gpa:gv('edu_gpa'),
+    work_1_company:gv('work_1_company'),work_1_position:gv('work_1_position'),
+    work_1_start:gv('work_1_start'),work_1_end:gv('work_1_end'),
+    work_1_salary:gv('work_1_salary'),work_1_reason:gv('work_1_reason'),
+    work_2_company:gv('work_2_company'),work_2_position:gv('work_2_position'),
+    work_2_start:gv('work_2_start'),work_2_end:gv('work_2_end'),
+    work_2_salary:gv('work_2_salary'),work_2_reason:gv('work_2_reason'),
+    work_3_company:gv('work_3_company'),work_3_position:gv('work_3_position'),
+    work_3_start:gv('work_3_start'),work_3_end:gv('work_3_end'),
+    work_3_salary:gv('work_3_salary'),work_3_reason:gv('work_3_reason'),
+    has_license:gr('has_license'),license_type:gc('license_type'),
+    computer_skills:gc('computer_skills'),computer_level:gr('computer_level'),
+    eng_read:gr('eng_read'),eng_write:gr('eng_write'),eng_speak:gr('eng_speak'),
+    other_lang:gv('other_lang'),own_vehicle:gr('own_vehicle'),can_ot:gr('can_ot'),
+    can_travel:gr('can_travel'),start_date:gv('start_date'),
+    special_skills:gv('special_skills'),references:gv('references')
+  };
+  var files=photoData?[{name:'photo.jpg',data:photoData}]:[];
+  showLoading('กำลังส่งใบสมัคร...');
+  google.script.run
+    .withSuccessHandler(function(result){
+      hideLoading();
+      if(result&&result.status==='OK'){
+        for(var i=1;i<=4;i++){
+          var el=document.getElementById('step'+i);if(el)el.classList.add('hidden');
+          var tab=document.getElementById('tab'+i);if(tab){tab.classList.remove('active');tab.classList.add('done');}
+        }
+        var s=document.getElementById('stepSuccess');if(s)s.classList.remove('hidden');
+        var r=document.getElementById('refCode');if(r&&result.folderId)r.textContent='Ref: '+result.folderId;
+        window.scrollTo(0,0);
+      }else{alert('เกิดข้อผิดพลาด: '+(result&&result.message?result.message:'Unknown error'));}
+    })
+    .withFailureHandler(function(err){hideLoading();alert('เกิดข้อผิดพลาด: '+err.message);})
+    .doPost_fromHTML(fields,files);
+}
+</script>
+</body></html>
