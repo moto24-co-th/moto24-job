@@ -16,7 +16,6 @@ body{font-family:'Sarabun',sans-serif;font-size:13px;background:#f0f2f5;color:#3
 .container{max-width:820px;margin:0 auto;padding:6px 4px}
 .card{background:#fff;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,0.05);padding:12px 16px;margin-bottom:8px}
 
-/* ✨ 1. ปรับปรุงดีไซน์ส่วนหัวบริษัทตามที่แนะนำ */
 .site-header {
   background: linear-gradient(135deg, #1a3a7c 0%, #2456b0 100%);
   color: #fff;
@@ -30,13 +29,7 @@ body{font-family:'Sarabun',sans-serif;font-size:13px;background:#f0f2f5;color:#3
 }
 .header-left { display: flex; align-items: center; gap: 14px; }
 .logo-box {
-  background: #fff;
-  border-radius: 6px;
-  padding: 4px 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: #fff; border-radius: 6px; padding: 4px 10px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .logo-main { font-size: 20px; font-weight: 800; color: #1a3a7c; }
 .logo-24 { color: #f97316; font-size: 20px; font-weight: 800; }
@@ -97,7 +90,7 @@ body{font-family:'Sarabun',sans-serif;font-size:13px;background:#f0f2f5;color:#3
 .pdpa-box{background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:8px 10px;font-size:11px;color:#4b5563;line-height:1.5;max-height:100px;overflow-y:auto}
 .pdpa-consent{margin-top:6px;padding:6px;background:#f9fafb;border-radius:6px;border:1px solid #e5e7eb}
 .pdpa-consent label{font-size:11.5px;font-weight:600;color:#1a3a7c;cursor:pointer;display:flex;align-items:center;gap:6px}
-.notice-box{background:#fff7ed;border:1px solid #f97316;border-radius:6px;padding:8px;font-size:11.5px;color:#c2410c;font-weight:700;text-align:center;margin:8px 0}
+.notice-box{background:#fff7ed;border:1px solid #f97316;border-radius:8px;padding:8px;font-size:11.5px;color:#c2410c;font-weight:700;text-align:center;margin:8px 0}
 
 @media(max-width:600px){
   .site-header { flex-direction: column; text-align: center; padding: 15px; }
@@ -106,7 +99,6 @@ body{font-family:'Sarabun',sans-serif;font-size:13px;background:#f0f2f5;color:#3
   .radio-row, .check-row { flex-direction: column; align-items: flex-start; }
 }
 
-/* 🖨️ 3. โหมดพิมพ์ PDF: ปรับฟอนต์ลงและรัดระยะให้ลงล็อก 4 หน้ากระดาษพอดิบพอดี */
 @media print{
   body{background:#fff;font-size:8.5pt!important;line-height:1.3}
   .overlay,.progress-bar,.btn-row{display:none!important}
@@ -124,10 +116,10 @@ body{font-family:'Sarabun',sans-serif;font-size:13px;background:#f0f2f5;color:#3
   .section-title { font-size: 10pt!important; margin: 4px 0; padding-left: 4px; }
   .form-step{display:block!important}
   
-  /* 📌 จัดสัดส่วนแบ่งหน้าพิมพ์ให้ลงล็อก 4 หน้ากระดาษแบบเป๊ะๆ */
-  #step2 { page-break-before: always; } /* หน้า 2: เริ่มหมวดครอบครัว */
-  #step3 { page-break-before: always; } /* หน้า 3: เริ่มหมวดการศึกษาและประวัติงาน */
-  #step4 { page-break-before: always; } /* หน้า 4: ภาษา ทักษะพิเศษ และการเซ็นชื่อ */
+  /* บังคับสัดส่วนหน้ากระดาษอย่างละเอียด */
+  #step2 { page-break-before: always; } 
+  #step3 { page-break-before: always; } 
+  #step4 { page-break-before: always; } 
 
   .field label{font-size:8pt!important}
   .field input,.field select,.field textarea{border:none;border-bottom:1px solid #777;border-radius:0;padding:1px 0;font-size:9pt!important;background:transparent!important}
@@ -185,14 +177,17 @@ body{font-family:'Sarabun',sans-serif;font-size:13px;background:#f0f2f5;color:#3
 <div class="card">
   <div class="pdpa-box">
     <strong>คำรับรอง / Declaration & นโยบายความเป็นส่วนตัว (PDPA)</strong><br>
-    ข้าพเจ้าขอรับรองว่าข้อความและรายละเอียดต่าง ๆ ที่ระบุไว้ข้างต้นเป็นความจริงและถูกต้องทุกประการ ข้าพเจ้าทราบดีว่าหากมีข้อความที่ไม่จริง ย่อมเป็นเหตุให้ข้าพเจ้าถูกปลดออกจากงานได้ทันที บริษัท โมโต24 จำกัด จะเก็บรวบรวม ใช้ และ/หรือเปิดเผยข้อมูลส่วนบุคคลของท่านเพื่อวัตถุประสงค์ในการพิจารณาคัดเลือกบุคคลเข้าทำงานเท่านั้น [cite: 183, 184]
+    ข้าพเจ้าขอรับรองว่าข้อความและรายละเอียดต่าง ๆ ที่ระบุไว้ข้างต้นเป็นความจริงและถูกต้องทุกประการ ข้าพเจ้าทราบดีว่าหากมีข้อความที่ไม่จริง ย่อมเป็นเหตุให้ข้าพเจ้าถูกปลดออกจากงานได้ทันที บริษัท โมโต24 จำกัด จะเก็บรวบรวม ใช้ และ/หรือเปิดเผยข้อมูลส่วนบุคคลของท่านเพื่อวัตถุประสงค์ในการพิจารณาคัดเลือกบุคคลเข้าทำงานเท่านั้น
   </div>
   
   <div class="pdpa-consent">
-    <label><input type="checkbox" id="pdpa_consent"> [X] ข้าพเจ้ายอมรับเงื่อนไขข้อตกลงข้างต้นและยินยอมระบบ PDPA</label> [cite: 185]
+    <label><input type="checkbox" id="declaration_check"> ข้าพเจ้ายอมรับเงื่อนไขข้อตกลงข้างต้น</label>
   </div>
   <div class="pdpa-consent" style="margin-top:4px">
-    <label><input type="checkbox" id="consent"> [X] ข้าพเจ้าขอรับรองว่าข้อมูลข้างต้นเป็นความจริงทุกประการ</label>
+    <label><input type="checkbox" id="pdpa_consent"> ข้าพเจ้ายอมรับนโยบายความเป็นส่วนตัว (PDPA)</label>
+  </div>
+  <div class="pdpa-consent" style="margin-top:4px">
+    <label><input type="checkbox" id="consent"> ข้าพเจ้าขอรับรองว่าข้อมูลข้างต้นเป็นความจริงทุกประการ</label>
   </div>
   
   <div class="notice-box">⚠️ ให้ผู้สมัครตรวจสอบข้อมูลให้ถูกต้องและครบถ้วนเพื่อประโยชน์ในการพิจารณา</div>
@@ -277,13 +272,18 @@ return true;}
 function f2b(file){return new Promise(function(resolve,reject){var r=new FileReader();r.onload=function(e){resolve(e.target.result.split(',')[1]);};r.onerror=reject;r.readAsDataURL(file);})}
 
 async function submitForm(){
-if(!document.getElementById('pdpa_consent').checked){alert('กรุณายอมรับเงื่อนไขข้อตกลงและระบบ PDPA ก่อนส่งเอกสารค่ะ');return;}
+if(!document.getElementById('declaration_check').checked){alert('กรุณาเลือกยอมรับเงื่อนไขข้อตกลงข้างต้นก่อนส่งเอกสารค่ะ');return;}
+if(!document.getElementById('pdpa_consent').checked){alert('กรุณายอมรับนโยบาย PDPA ก่อนส่งเอกสารค่ะ');return;}
 if(!document.getElementById('consent').checked){alert('กรุณายืนยันความถูกต้องของข้อมูลก่อนส่งเอกสารค่ะ');return;}
 function r(n){var e=document.querySelector('input[name='+n+']:checked');return e?e.value:'';}
 function g(id){var el=document.getElementById(id);return el?el.value:'';}
 var veh=[];if(document.getElementById('vehicle_car').checked)veh.push('รถยนต์');if(document.getElementById('vehicle_mc').checked)veh.push('รถจักรยานยนต์');
 
-var fields={employment_type:r('employment_type'),position:g('position'),salary_expected:g('salary_expected'),application_date:g('application_date'),title_th:g('title_th'),name_th:g('name_th'),nickname:g('nickname'),name_en:g('name_en'),dob:g('dob'),age:g('age'),religion:g('religion'),birth_place:g('birth_place'),nationality:g('nationality'),race:g('race'),height:g('height'),weight:g('weight'),id_card:g('id_card'),phone_mobile:g('phone_mobile'),email:g('email'),address_present:g('address_present'),address_permanent:g('address_permanent'),marital_status:r('marital_status'),father_name:g('father_name'),father_age:g('father_age'),father_occupation:g('father_occupation'),father_phone:g('father_phone'),mother_name:g('mother_name'),mother_age:g('mother_age'),mother_occupation:g('mother_occupation'),mother_phone:g('mother_phone'),siblings_total:g('siblings_total'),siblings_male:g('siblings_male'),siblings_female:g('siblings_female'),spouse_name:g('spouse_name'),spouse_age:g('spouse_age'),spouse_occupation:g('spouse_occupation'),spouse_phone:g('spouse_phone'),children_count:g('children_count'),military:r('military'),military_exempt_reason:g('military_exempt_reason'),emerg_name:g('emerg_name'),emerg_relation:g('emerg_relation'),emerg_phone:g('emerg_phone'),emerg_mobile:g('emerg_mobile'),emerg_address:g('emerg_address'),edu_1_level:g('edu_1_level'),edu_1_inst:g('edu_1_inst'),edu_1_major:g('edu_1_major'),edu_1_from_to:g('edu_1_from_to'),edu_1_place:g('edu_1_place'),edu_1_gpa:g('edu_1_gpa'),edu_2_level:g('edu_2_level'),edu_2_inst:g('edu_2_inst'),edu_2_major:g('edu_2_major'),edu_2_from_to:g('edu_2_from_to'),edu_2_place:g('edu_2_place'),edu_2_gpa:g('edu_2_gpa'),edu_3_level:g('edu_3_level'),edu_3_inst:g('edu_3_inst'),edu_3_major:g('edu_3_major'),edu_3_from_to:g('edu_3_from_to'),edu_3_place:g('edu_3_place'),edu_3_gpa:g('edu_3_gpa'),work_1_employer:g('work_1_employer'),work_1_business:g('work_1_business'),work_1_position:g('work_1_position'),work_1_from:g('work_1_from'),work_1_to:g('work_1_to'),work_1_salary_start:g('work_1_salary_start'),work_1_salary_end:g('work_1_salary_end'),work_1_details:g('work_1_details'),work_1_quit_reason:g('work_1_quit_reason'),work_2_employer:g('work_2_employer'),work_2_business:g('work_2_business'),work_2_position:g('work_2_position'),work_2_from:g('work_2_from'),work_2_to:g('work_2_to'),work_2_salary_start:g('work_2_salary_start'),work_2_salary_end:g('work_2_salary_end'),work_2_details:g('work_2_details'),work_2_quit_reason:g('work_2_quit_reason'),work_3_employer:g('work_3_employer'),work_3_business:g('work_3_business'),work_3_position:g('work_3_position'),work_3_from:g('work_3_from'),work_3_to:g('work_3_to'),work_3_salary_start:g('work_3_salary_start'),work_3_salary_end:g('work_3_salary_end'),work_3_details:g('work_3_details'),work_3_quit_reason:g('work_3_quit_reason'),start_date:g('start_date'),lang_th_speak:g('lang_th_speak'),lang_th_read:g('lang_th_read'),lang_th_write:g('lang_th_write'),lang_en_speak:g('lang_en_speak'),lang_en_read:g('lang_en_read'),lang_en_write:g('lang_en_write'),lang_other_name:g('lang_other_name'),lang_other_speak:g('lang_other_speak'),lang_other_read:g('lang_other_read'),computer_skills:g('computer_skills'),other_skills:g('other_skills'),hobbies:g('hobbies'),memberships:g('memberships'),vehicle:veh.join(', '),license:r('license'),vehicle_for_work:r('vehicle_for_work'),travel:r('travel'),overtime:r('overtime'),disease:r('disease'),disease_detail:g('disease_detail'),arrested:r('arrested'),arrested_detail:g('arrested_detail'),cur_salary:g('cur_salary'),cur_bonus:g('cur_bonus'),cur_commission:g('cur_commission'),cur_petrol:g('cur_petrol'),cur_housing:g('cur_housing'),cur_insurance:g('cur_insurance'),cur_medical:g('cur_medical'),cur_provident:g('cur_provident'),ref_1_name:g('ref_1_name'),ref_1_relation:g('ref_1_relation'),ref_1_company:g('ref_1_company'),ref_1_phone:g('ref_1_phone'),ref_2_name:g('ref_2_name'),ref_2_relation:g('ref_2_relation'),ref_2_company:g('ref_2_company'),ref_2_phone:g('ref_2_phone'),pdpa_consent:document.getElementById('pdpa_consent').checked?'ยอมรับ':'',consent:document.getElementById('consent').checked?'ยืนยัน':''};
+var fields={employment_type:r('employment_type'),position:g('position'),salary_expected:g('salary_expected'),application_date:g('application_date'),title_th:g('title_th'),name_th:g('name_th'),nickname:g('nickname'),name_en:g('name_en'),dob:g('dob'),age:g('age'),religion:g('religion'),birth_place:g('birth_place'),nationality:g('nationality'),race:g('race'),height:g('height'),weight:g('weight'),id_card:g('id_card'),phone_mobile:g('phone_mobile'),email:g('email'),address_present:g('address_present'),address_permanent:g('address_permanent'),marital_status:r('marital_status'),father_name:g('father_name'),father_age:g('father_age'),father_occupation:g('father_occupation'),father_phone:g('father_phone'),mother_name:g('mother_name'),mother_age:g('mother_age'),mother_occupation:g('mother_occupation'),mother_phone:g('mother_phone'),siblings_total:g('siblings_total'),siblings_male:g('siblings_male'),siblings_female:g('siblings_female'),spouse_name:g('spouse_name'),spouse_age:g('spouse_age'),spouse_occupation:g('spouse_occupation'),spouse_phone:g('spouse_phone'),children_count:g('children_count'),military:r('military'),military_exempt_reason:g('military_exempt_reason'),emerg_name:g('emerg_name'),emerg_relation:g('emerg_relation'),emerg_phone:g('emerg_phone'),emerg_mobile:g('emerg_mobile'),emerg_address:g('emerg_address'),edu_1_level:g('edu_1_level'),edu_1_inst:g('edu_1_inst'),edu_1_major:g('edu_1_major'),edu_1_from_to:g('edu_1_from_to'),edu_1_place:g('edu_1_place'),edu_1_gpa:g('edu_1_gpa'),edu_2_level:g('edu_2_level'),edu_2_inst:g('edu_2_inst'),edu_2_major:g('edu_2_major'),edu_2_from_to:g('edu_2_from_to'),edu_2_place:g('edu_2_place'),edu_2_gpa:g('edu_2_gpa'),edu_3_level:g('edu_3_level'),edu_3_inst:g('edu_3_inst'),edu_3_major:g('edu_3_major'),edu_3_from_to:g('edu_3_from_to'),edu_3_place:g('edu_3_place'),edu_3_gpa:g('edu_3_gpa'),work_1_employer:g('work_1_employer'),work_1_business:g('work_1_business'),work_1_position:g('work_1_position'),work_1_from:g('work_1_from'),work_1_to:g('work_1_to'),work_1_salary_start:g('work_1_salary_start'),work_1_salary_end:g('work_1_salary_end'),work_1_details:g('work_1_details'),work_1_quit_reason:g('work_1_quit_reason'),work_2_employer:g('work_2_employer'),work_2_business:g('work_2_business'),work_2_position:g('work_2_position'),work_2_from:g('work_2_from'),work_2_to:g('work_2_to'),work_2_salary_start:g('work_2_salary_start'),work_2_salary_end:g('work_2_salary_end'),work_2_details:g('work_2_details'),work_2_quit_reason:g('work_2_quit_reason'),work_3_employer:g('work_3_employer'),work_3_business:g('work_3_business'),work_3_position:g('work_3_position'),work_3_from:g('work_3_from'),work_3_to:g('work_3_to'),work_3_salary_start:g('work_3_salary_start'),work_3_salary_end:g('work_3_salary_end'),work_3_details:g('work_3_details'),work_3_quit_reason:g('work_3_quit_reason'),start_date:g('start_date'),lang_th_speak:g('lang_th_speak'),lang_th_read:g('lang_th_read'),lang_th_write:g('lang_th_write'),lang_en_speak:g('lang_en_speak'),lang_en_read:g('lang_en_read'),lang_en_write:g('lang_en_write'),lang_other_name:g('lang_other_name'),lang_other_speak:g('lang_other_speak'),lang_other_read:g('lang_other_read'),computer_skills:g('computer_skills'),other_skills:g('other_skills'),hobbies:g('hobbies'),memberships:g('memberships'),vehicle:veh.join(', '),license:r('license'),vehicle_for_work:r('vehicle_for_work'),travel:r('travel'),overtime:r('overtime'),disease:r('disease'),disease_detail:g('disease_detail'),arrested:r('arrested'),arrested_detail:g('arrested_detail'),cur_salary:g('cur_salary'),cur_bonus:g('cur_bonus'),cur_commission:g('cur_commission'),cur_petrol:g('cur_petrol'),cur_housing:g('cur_housing'),cur_insurance:g('cur_insurance'),cur_medical:g('cur_medical'),cur_provident:g('cur_provident'),ref_1_name:g('ref_1_name'),ref_1_relation:g('ref_1_relation'),ref_1_company:g('ref_1_company'),ref_1_phone:g('ref_1_phone'),ref_2_name:g('ref_2_name'),ref_2_relation:g('ref_2_relation'),ref_2_company:g('ref_2_company'),ref_2_phone:g('ref_2_phone'),
+  declaration_accepted: document.getElementById('declaration_check').checked ? 'ยอมรับเงื่อนไข' : '',
+  pdpa_consent: document.getElementById('pdpa_consent').checked ? 'ยอมรับ' : '',
+  consent: document.getElementById('consent').checked ? 'ยืนยัน' : ''
+};
 
 var files=[];var pf=document.getElementById('photoFile').files[0];if(pf){var pb64=await f2b(pf);files.push({field:'file_photo',name:pf.name,type:pf.type,data:pb64});}
 var fkeys=['file_portfolio','file_resume','file_idcard','file_house','file_other'];
